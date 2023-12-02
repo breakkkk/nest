@@ -1,3 +1,11 @@
+<!--
+ * @Author: 南靳
+ * @Date: 2023-12-02 11:03:23
+ * @LastEditors: 南靳
+ * @LastEditTime: 2023-12-02 13:27:10
+ * @FilePath: /nest-demo/README.md
+ * @Description: 
+-->
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -37,6 +45,9 @@ $ npm install
 ```bash
 # development
 $ npm run start
+
+# 热部署
+$ npm run start:hot
 
 # watch mode
 $ npm run start:dev
