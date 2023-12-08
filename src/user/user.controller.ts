@@ -6,15 +6,35 @@
  * @FilePath: /nest-demo/src/user/user.controller.ts
  * @Description:
  */
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ConfigService } from '@nestjs/config';
+import { UserEntity, UserEntityDataType } from './user.entity';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private configService: ConfigService,
+    private userService: UserService,
+  ) {
+    const dbUser = configService.get<string>('DB_type');
+    // get a custom configuration value
+    const dbHost = this.configService.get<string>('DB_PORT');
+    console.log(dbUser, dbHost);
+  }
 
   @Get('getUser')
   GetUserInfo() {
     return this.userService.GetUserInfo();
+  }
+
+  @Get('QueryUserList')
+  async QueryUserList(): Promise<UserEntity[]> {
+    return await this.userService.QueryList();
+  }
+
+  @Post('createUser')
+  async createUser(@Body() data: UserEntityDataType): Promise<UserEntity> {
+    return await this.userService.CreateUser(data);
   }
 }
