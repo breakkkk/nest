@@ -9,7 +9,7 @@
 import { Injectable } from '@nestjs/common';
 import { IUser } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity, UserEntityDataType } from './user.entity';
+import { UserEntity, UserEntityDataType } from './entitys/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

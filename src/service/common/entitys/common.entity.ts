@@ -2,39 +2,17 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  DeepPartial,
-  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'user' })
-export class UserEntity extends BaseEntity {
+export abstract class CommonEntity extends BaseEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
     name: 'id',
-    comment: '用户id',
+    comment: 'id',
   })
   id: number;
-
-  @Column({
-    type: 'varchar',
-    nullable: false,
-    length: 50,
-    unique: true,
-    name: 'username',
-    comment: '用户名',
-  })
-  username: string;
-
-  @Column({
-    type: 'varchar',
-    nullable: false,
-    length: 100,
-    name: 'password',
-    comment: '密码',
-  })
-  password: string;
 
   @Column('tinyint', {
     nullable: false,
@@ -60,5 +38,3 @@ export class UserEntity extends BaseEntity {
   })
   updateAt: Date;
 }
-
-export type UserEntityDataType = DeepPartial<UserEntity>;

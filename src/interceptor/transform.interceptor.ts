@@ -11,7 +11,8 @@ export class TransformInterceptor<T>
   ): Observable<ApiResponse<T>> | Promise<Observable<ApiResponse<T>>> {
     return next.handle().pipe(
       map((data) => {
-        const code = context.switchToHttp().getResponse().statusCode;
+        const response = context.switchToHttp().getResponse();
+        const code = response.statusCode;
         return new ApiResponse<T>(data, code);
       }),
     );

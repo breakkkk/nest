@@ -7,36 +7,37 @@
  * @Description:
  */
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
+import { UserModule } from './service/system/user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import path from 'node:path/win32';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
+import { MenuModule } from './service/option/menu/menu.module';
+
+const envFilePath = [__dirname + './env/.env'];
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+    envFilePath.unshift('.env.development');
+    break;
+  case 'production':
+    envFilePath.unshift('.env.production');
+    break;
+}
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // envFilePath: ['.env.development', '.env.production'],
-      load: [
-        () => ({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: '826722',
-          database: 'nest_test',
-          logging: true,
-        }),
-      ],
+      isGlobal: true,
+      envFilePath: envFilePath,
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
+      type: process.env.DB_type as 'mysql',
+      host: process.env.DB_HOST,
       port: parseInt(process.env.PORT),
-      username: 'root',
-      password: '826722',
-      database: 'nest_test',
-      logging: true,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      logging: false,
       synchronize: true,
       autoLoadEntities: true,
       entities: [__dirname + '/**/*.entity.{ts,js}'],
@@ -49,6 +50,7 @@ import { TransformInterceptor } from './interceptor/transform.interceptor';
       // },
     }),
     UserModule,
+    MenuModule,
   ],
   controllers: [],
   providers: [

@@ -9,19 +9,14 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
-import { UserEntity, UserEntityDataType } from './user.entity';
+import { UserEntity, UserEntityDataType } from './entitys/user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(
     private configService: ConfigService,
     private userService: UserService,
-  ) {
-    const dbUser = configService.get<string>('DB_type');
-    // get a custom configuration value
-    const dbHost = this.configService.get<string>('DB_PORT');
-    console.log(dbUser, dbHost);
-  }
+  ) {}
 
   @Get('getUser')
   GetUserInfo() {
